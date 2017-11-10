@@ -29,8 +29,23 @@ app.use(methodOverride());
 
 
 // listen (start app with node server.js) ======================================
-app.listen(8080);
-console.log("App listening on port 8080");
+// app.listen(8080);
+
+// [START app]
+
+app.get('/', (req, res) => {
+  res.status(200).send('Hello, world!').end();
+});
+
+// Start the server
+const PORT = process.env.PORT || 8080;
+app.listen(PORT, () => {
+  console.log(`App listening on port ${PORT}`);
+  console.log('Press Ctr + C to quit.');
+});
+// [END app]
+
+// console.log("App listening on port 8080");
 
 
 // routes ======================================================================

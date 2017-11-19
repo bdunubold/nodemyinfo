@@ -37,12 +37,24 @@ app.get('/', (req, res) => {
   res.status(200).send('Hello, world!').end();
 });
 
+const PORT = 80;
+const ADDRESS = '0.0.0.0';
+
 // Start the server
-const PORT = process.env.PORT || 8080;
-app.listen(PORT, () => {
-  console.log(`App listening on port ${PORT}`);
-  console.log('Press Ctr + C to quit.');
+//const PORT = process.env.PORT || 8080;
+//app.listen(PORT, () => {
+//  console.log(`App listening on port ${PORT}`);
+//  console.log('Press Ctr + C to quit.');
+//});
+
+app.listen(PORT, ADDRESS, function () {
+	    console.log('Server running at http://%s:%d/', ADDRESS, PORT);
+	    console.log('Press CTRL+C to exit');
 });
+
+
+
+
 // [END app]
 
 // console.log("App listening on port 8080");
@@ -109,6 +121,15 @@ app.get('*', function(req, res) {
 	res.sendfile('./public/index.html'); // load the single view file (angular will handle the page changes on the front-end)
 });
 
+
+
+process.on('SIGTERM', function () {
+	  if (server === undefined) return;
+	  server.close(function () {
+		      // Disconnect from cluster master
+		       process.disconnect && process.disconnect();
+		         });
+		  });
 
 // 'use strict';
 //
